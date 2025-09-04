@@ -4,28 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘 할일 - Today's Todo</title>
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        destructive: {
+                            DEFAULT: "hsl(var(--destructive))",
+                            foreground: "hsl(var(--destructive-foreground))",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))",
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))",
+                        },
+                        popover: {
+                            DEFAULT: "hsl(var(--popover))",
+                            foreground: "hsl(var(--popover-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            --popover: 0 0% 100%;
+            --popover-foreground: 222.2 84% 4.9%;
+            --primary: 221.2 83.2% 53.3%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 210 40% 96%;
+            --secondary-foreground: 222.2 84% 4.9%;
+            --muted: 210 40% 96%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --accent: 210 40% 96%;
+            --accent-foreground: 222.2 84% 4.9%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 214.3 31.8% 91.4%;
+            --input: 214.3 31.8% 91.4%;
+            --ring: 221.2 83.2% 53.3%;
+            --radius: 0.5rem;
+        }
+        .dark {
+            --background: 222.2 84% 4.9%;
+            --foreground: 210 40% 98%;
+            --card: 222.2 84% 4.9%;
+            --card-foreground: 210 40% 98%;
+            --popover: 222.2 84% 4.9%;
+            --popover-foreground: 210 40% 98%;
+            --primary: 217.2 91.2% 59.8%;
+            --primary-foreground: 222.2 84% 4.9%;
+            --secondary: 217.2 32.6% 17.5%;
+            --secondary-foreground: 210 40% 98%;
+            --muted: 217.2 32.6% 17.5%;
+            --muted-foreground: 215 20.2% 65.1%;
+            --accent: 217.2 32.6% 17.5%;
+            --accent-foreground: 210 40% 98%;
+            --destructive: 0 62.8% 30.6%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 217.2 32.6% 17.5%;
+            --input: 217.2 32.6% 17.5%;
+            --ring: 224.3 76.3% 94.1%;
+        }
+    </style>
 </head>
 <body>
     <!-- 헤더 영역 -->
-    <header class="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div class="container mx-auto px-4 py-6">
+    <header class="border-b bg-white/95 backdrop-blur">
+        <div class="max-w-7xl mx-auto px-4 py-6">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                        <i class="fas fa-tasks text-primary-foreground text-sm"></i>
+                    <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600">
+                        <i class="fas fa-tasks text-white text-sm"></i>
                     </div>
-                    <h1 class="text-2xl font-bold tracking-tight">오늘 할일</h1>
+                    <h1 class="text-2xl font-bold tracking-tight text-gray-900">오늘 할일</h1>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div class="text-right">
-                        <div class="text-sm font-medium text-muted-foreground">진행률</div>
-                        <div class="text-lg font-semibold">0%</div>
+                        <div class="text-sm font-medium text-gray-500">진행률</div>
+                        <div class="text-lg font-semibold text-gray-900">0%</div>
                     </div>
-                    <div class="w-24 h-2 bg-muted rounded-full overflow-hidden">
-                        <div class="h-full bg-primary rounded-full transition-all duration-300" style="width: 0%"></div>
+                    <div class="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-blue-600 rounded-full transition-all duration-300" style="width: 0%"></div>
                     </div>
                 </div>
             </div>
@@ -33,14 +126,14 @@
     </header>
 
     <!-- 메인 컨텐츠 -->
-    <main class="min-h-screen bg-background">
-        <div class="container mx-auto px-4 py-8">
+    <main class="min-h-screen bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 py-8">
             <!-- 할일 입력 영역 -->
-            <section class="rounded-lg border bg-card p-6 shadow-sm">
+            <section class="rounded-lg border bg-white p-6 shadow-sm">
                 <div class="space-y-4">
                     <div class="flex gap-2">
-                        <input type="text" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" placeholder="새로운 할일을 입력하세요..." maxlength="100">
-                        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" type="button">
+                        <input type="text" class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="새로운 할일을 입력하세요..." maxlength="100">
+                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 h-10 px-4 py-2 transition-colors" type="button">
                             <i class="fas fa-plus mr-2"></i>
                             추가
                         </button>
@@ -48,17 +141,17 @@
                     
                     <!-- 우선순위 선택 -->
                     <div class="space-y-2">
-                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">우선순위</label>
+                        <label class="text-sm font-medium text-gray-700">우선순위</label>
                         <div class="flex gap-2">
-                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 text-red-600 border-red-200 bg-red-50 hover:bg-red-100" data-priority="high">
+                            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 h-9 px-3 transition-colors" data-priority="high">
                                 <i class="fas fa-exclamation-circle mr-2"></i>
                                 높음
                             </button>
-                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3" data-priority="medium">
+                            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 h-9 px-3 transition-colors" data-priority="medium">
                                 <i class="fas fa-minus-circle mr-2"></i>
                                 보통
                             </button>
-                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3" data-priority="low">
+                            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 h-9 px-3 transition-colors" data-priority="low">
                                 <i class="fas fa-arrow-down mr-2"></i>
                                 낮음
                             </button>
@@ -67,8 +160,8 @@
 
                     <!-- 카테고리 선택 -->
                     <div class="space-y-2">
-                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">카테고리</label>
-                        <select class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                        <label class="text-sm font-medium text-gray-700">카테고리</label>
+                        <select class="flex h-10 w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <option value="work">업무</option>
                             <option value="personal">개인</option>
                             <option value="shopping">쇼핑</option>
@@ -80,11 +173,11 @@
             </section>
 
             <!-- 필터 및 정렬 옵션 -->
-            <section class="mt-6 rounded-lg border bg-card p-4 shadow-sm">
+            <section class="mt-6 rounded-lg border bg-white p-4 shadow-sm">
                 <div class="flex flex-wrap items-center gap-4">
                     <div class="flex items-center space-x-2">
-                        <label class="text-sm font-medium">카테고리 필터:</label>
-                        <select class="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-32">
+                        <label class="text-sm font-medium text-gray-700">카테고리 필터:</label>
+                        <select class="flex h-9 w-32 items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <option value="all">전체</option>
                             <option value="work">업무</option>
                             <option value="personal">개인</option>
@@ -95,8 +188,8 @@
                     </div>
                     
                     <div class="flex items-center space-x-2">
-                        <label class="text-sm font-medium">정렬:</label>
-                        <select class="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-32">
+                        <label class="text-sm font-medium text-gray-700">정렬:</label>
+                        <select class="flex h-9 w-32 items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <option value="priority">우선순위순</option>
                             <option value="created">생성순</option>
                             <option value="alphabetical">가나다순</option>
@@ -104,10 +197,10 @@
                     </div>
 
                     <div class="flex items-center space-x-1 ml-auto">
-                        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 w-9 bg-primary text-primary-foreground hover:bg-primary/90" data-view="list">
+                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-gray-300 bg-blue-600 text-white hover:bg-blue-700 h-9 w-9 transition-colors" data-view="list">
                             <i class="fas fa-list"></i>
                         </button>
-                        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 w-9" data-view="grid">
+                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 h-9 w-9 transition-colors" data-view="grid">
                             <i class="fas fa-th"></i>
                         </button>
                     </div>
@@ -115,21 +208,21 @@
             </section>
 
             <!-- 할일 목록 -->
-            <section class="mt-6 rounded-lg border bg-card shadow-sm">
+            <section class="mt-6 rounded-lg border bg-white shadow-sm">
                 <!-- 통계 -->
-                <div class="border-b bg-muted/50 p-4">
+                <div class="border-b bg-gray-50 p-4">
                     <div class="grid grid-cols-3 gap-4 text-center">
                         <div>
-                            <div class="text-2xl font-bold text-primary">0</div>
-                            <div class="text-sm text-muted-foreground">전체</div>
+                            <div class="text-2xl font-bold text-blue-600">0</div>
+                            <div class="text-sm text-gray-500">전체</div>
                         </div>
                         <div>
                             <div class="text-2xl font-bold text-green-600">0</div>
-                            <div class="text-sm text-muted-foreground">완료</div>
+                            <div class="text-sm text-gray-500">완료</div>
                         </div>
                         <div>
                             <div class="text-2xl font-bold text-orange-600">0</div>
-                            <div class="text-sm text-muted-foreground">남은 일</div>
+                            <div class="text-sm text-gray-500">남은 일</div>
                         </div>
                     </div>
                 </div>
@@ -137,73 +230,73 @@
                 <!-- 할일 목록 -->
                 <div class="p-4 space-y-3">
                     <!-- 샘플 할일 카드 1 -->
-                    <div class="flex items-center space-x-3 rounded-lg border p-4 hover:bg-muted/50 transition-colors" data-priority="high" data-category="work">
-                        <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" id="todo-1">
+                    <div class="flex items-center space-x-3 rounded-lg border p-4 hover:bg-gray-50 transition-colors" data-priority="high" data-category="work">
+                        <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" id="todo-1">
                         <div class="flex-1 space-y-1">
-                            <label for="todo-1" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">프로젝트 기획서 작성하기</label>
+                            <label for="todo-1" class="text-sm font-medium text-gray-900 cursor-pointer">프로젝트 기획서 작성하기</label>
                             <div class="flex items-center space-x-2">
-                                <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-purple-100 text-purple-800">업무</span>
+                                <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-purple-100 text-purple-800">업무</span>
                                 <div class="h-1 w-1 rounded-full bg-red-500"></div>
-                                <span class="text-xs text-muted-foreground">높음</span>
+                                <span class="text-xs text-gray-500">높음</span>
                             </div>
                         </div>
                         <div class="flex items-center space-x-1">
-                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8" title="수정">
-                                <i class="fas fa-edit text-sm"></i>
+                            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium hover:bg-gray-100 h-8 w-8 transition-colors" title="수정">
+                                <i class="fas fa-edit text-sm text-gray-600"></i>
                             </button>
-                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-destructive hover:text-destructive-foreground h-8 w-8" title="삭제">
-                                <i class="fas fa-trash text-sm"></i>
+                            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium hover:bg-red-100 h-8 w-8 transition-colors" title="삭제">
+                                <i class="fas fa-trash text-sm text-red-600"></i>
                             </button>
                         </div>
                     </div>
 
                     <!-- 샘플 할일 카드 2 -->
-                    <div class="flex items-center space-x-3 rounded-lg border p-4 hover:bg-muted/50 transition-colors opacity-60" data-priority="medium" data-category="personal">
-                        <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" id="todo-2" checked>
+                    <div class="flex items-center space-x-3 rounded-lg border p-4 hover:bg-gray-50 transition-colors opacity-60" data-priority="medium" data-category="personal">
+                        <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" id="todo-2" checked>
                         <div class="flex-1 space-y-1">
-                            <label for="todo-2" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer line-through text-muted-foreground">마트에서 장보기</label>
+                            <label for="todo-2" class="text-sm font-medium text-gray-500 cursor-pointer line-through">마트에서 장보기</label>
                             <div class="flex items-center space-x-2">
-                                <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-cyan-100 text-cyan-800">개인</span>
+                                <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-cyan-100 text-cyan-800">개인</span>
                                 <div class="h-1 w-1 rounded-full bg-yellow-500"></div>
-                                <span class="text-xs text-muted-foreground">보통</span>
+                                <span class="text-xs text-gray-500">보통</span>
                             </div>
                         </div>
                         <div class="flex items-center space-x-1">
-                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8" title="수정">
-                                <i class="fas fa-edit text-sm"></i>
+                            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium hover:bg-gray-100 h-8 w-8 transition-colors" title="수정">
+                                <i class="fas fa-edit text-sm text-gray-600"></i>
                             </button>
-                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-destructive hover:text-destructive-foreground h-8 w-8" title="삭제">
-                                <i class="fas fa-trash text-sm"></i>
+                            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium hover:bg-red-100 h-8 w-8 transition-colors" title="삭제">
+                                <i class="fas fa-trash text-sm text-red-600"></i>
                             </button>
                         </div>
                     </div>
 
                     <!-- 샘플 할일 카드 3 -->
-                    <div class="flex items-center space-x-3 rounded-lg border p-4 hover:bg-muted/50 transition-colors" data-priority="low" data-category="health">
-                        <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" id="todo-3">
+                    <div class="flex items-center space-x-3 rounded-lg border p-4 hover:bg-gray-50 transition-colors" data-priority="low" data-category="health">
+                        <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" id="todo-3">
                         <div class="flex-1 space-y-1">
-                            <label for="todo-3" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">30분 운동하기</label>
+                            <label for="todo-3" class="text-sm font-medium text-gray-900 cursor-pointer">30분 운동하기</label>
                             <div class="flex items-center space-x-2">
-                                <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-green-100 text-green-800">건강</span>
+                                <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-green-100 text-green-800">건강</span>
                                 <div class="h-1 w-1 rounded-full bg-green-500"></div>
-                                <span class="text-xs text-muted-foreground">낮음</span>
+                                <span class="text-xs text-gray-500">낮음</span>
                             </div>
                         </div>
                         <div class="flex items-center space-x-1">
-                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8" title="수정">
-                                <i class="fas fa-edit text-sm"></i>
+                            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium hover:bg-gray-100 h-8 w-8 transition-colors" title="수정">
+                                <i class="fas fa-edit text-sm text-gray-600"></i>
                             </button>
-                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-destructive hover:text-destructive-foreground h-8 w-8" title="삭제">
-                                <i class="fas fa-trash text-sm"></i>
+                            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium hover:bg-red-100 h-8 w-8 transition-colors" title="삭제">
+                                <i class="fas fa-trash text-sm text-red-600"></i>
                             </button>
                         </div>
                     </div>
 
                     <!-- 빈 상태 메시지 (할일이 없을 때) -->
                     <div class="flex flex-col items-center justify-center py-12 text-center" style="display: none;">
-                        <i class="fas fa-clipboard-list text-4xl text-muted-foreground mb-4"></i>
-                        <h3 class="text-lg font-semibold">할일이 없습니다</h3>
-                        <p class="text-sm text-muted-foreground">새로운 할일을 추가해보세요!</p>
+                        <i class="fas fa-clipboard-list text-4xl text-gray-400 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-gray-900">할일이 없습니다</h3>
+                        <p class="text-sm text-gray-500">새로운 할일을 추가해보세요!</p>
                     </div>
                 </div>
             </section>
@@ -211,9 +304,9 @@
     </main>
 
     <!-- 푸터 -->
-    <footer class="border-t bg-background">
-        <div class="container mx-auto px-4 py-6">
-            <p class="text-center text-sm text-muted-foreground">&copy; 2024 오늘 할일. 모든 권리 보유.</p>
+    <footer class="border-t bg-white">
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <p class="text-center text-sm text-gray-500">&copy; 2024 오늘 할일. 모든 권리 보유.</p>
         </div>
     </footer>
 
