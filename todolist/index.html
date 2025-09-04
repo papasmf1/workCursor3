@@ -5,79 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘 할일 - Today's Todo</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- 헤더 영역 -->
-    <header class="header">
-        <div class="container">
-            <h1 class="app-title">
-                <i class="fas fa-tasks"></i>
-                오늘 할일
-            </h1>
-            <div class="progress-section">
-                <div class="progress-info">
-                    <span class="progress-text">진행률</span>
-                    <span class="progress-percentage">0%</span>
+    <header class="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+                        <i class="fas fa-tasks text-primary-foreground text-sm"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold tracking-tight">오늘 할일</h1>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 0%"></div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <div class="text-sm font-medium text-muted-foreground">진행률</div>
+                        <div class="text-lg font-semibold">0%</div>
+                    </div>
+                    <div class="w-24 h-2 bg-muted rounded-full overflow-hidden">
+                        <div class="h-full bg-primary rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- 메인 컨텐츠 -->
-    <main class="main">
-        <div class="container">
+    <main class="min-h-screen bg-background">
+        <div class="container mx-auto px-4 py-8">
             <!-- 할일 입력 영역 -->
-            <section class="todo-input-section">
-                <div class="input-container">
-                    <input type="text" class="todo-input" placeholder="새로운 할일을 입력하세요..." maxlength="100">
-                    <button class="add-btn" type="button">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-                
-                <!-- 우선순위 선택 -->
-                <div class="priority-selector">
-                    <label class="priority-label">우선순위:</label>
-                    <div class="priority-options">
-                        <button class="priority-btn high active" data-priority="high">
-                            <i class="fas fa-exclamation-circle"></i>
-                            높음
-                        </button>
-                        <button class="priority-btn medium" data-priority="medium">
-                            <i class="fas fa-minus-circle"></i>
-                            보통
-                        </button>
-                        <button class="priority-btn low" data-priority="low">
-                            <i class="fas fa-arrow-down"></i>
-                            낮음
+            <section class="rounded-lg border bg-card p-6 shadow-sm">
+                <div class="space-y-4">
+                    <div class="flex gap-2">
+                        <input type="text" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" placeholder="새로운 할일을 입력하세요..." maxlength="100">
+                        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" type="button">
+                            <i class="fas fa-plus mr-2"></i>
+                            추가
                         </button>
                     </div>
-                </div>
+                    
+                    <!-- 우선순위 선택 -->
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">우선순위</label>
+                        <div class="flex gap-2">
+                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 text-red-600 border-red-200 bg-red-50 hover:bg-red-100" data-priority="high">
+                                <i class="fas fa-exclamation-circle mr-2"></i>
+                                높음
+                            </button>
+                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3" data-priority="medium">
+                                <i class="fas fa-minus-circle mr-2"></i>
+                                보통
+                            </button>
+                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3" data-priority="low">
+                                <i class="fas fa-arrow-down mr-2"></i>
+                                낮음
+                            </button>
+                        </div>
+                    </div>
 
-                <!-- 카테고리 선택 -->
-                <div class="category-selector">
-                    <label class="category-label">카테고리:</label>
-                    <select class="category-select">
-                        <option value="work">업무</option>
-                        <option value="personal">개인</option>
-                        <option value="shopping">쇼핑</option>
-                        <option value="health">건강</option>
-                        <option value="study">학습</option>
-                    </select>
+                    <!-- 카테고리 선택 -->
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">카테고리</label>
+                        <select class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                            <option value="work">업무</option>
+                            <option value="personal">개인</option>
+                            <option value="shopping">쇼핑</option>
+                            <option value="health">건강</option>
+                            <option value="study">학습</option>
+                        </select>
+                    </div>
                 </div>
             </section>
 
             <!-- 필터 및 정렬 옵션 -->
-            <section class="filter-section">
-                <div class="filter-container">
-                    <div class="filter-group">
-                        <label class="filter-label">카테고리 필터:</label>
-                        <select class="filter-select">
+            <section class="mt-6 rounded-lg border bg-card p-4 shadow-sm">
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium">카테고리 필터:</label>
+                        <select class="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-32">
                             <option value="all">전체</option>
                             <option value="work">업무</option>
                             <option value="personal">개인</option>
@@ -87,20 +94,20 @@
                         </select>
                     </div>
                     
-                    <div class="filter-group">
-                        <label class="filter-label">정렬:</label>
-                        <select class="sort-select">
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium">정렬:</label>
+                        <select class="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-32">
                             <option value="priority">우선순위순</option>
                             <option value="created">생성순</option>
                             <option value="alphabetical">가나다순</option>
                         </select>
                     </div>
 
-                    <div class="view-toggle">
-                        <button class="view-btn active" data-view="list">
+                    <div class="flex items-center space-x-1 ml-auto">
+                        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 w-9 bg-primary text-primary-foreground hover:bg-primary/90" data-view="list">
                             <i class="fas fa-list"></i>
                         </button>
-                        <button class="view-btn" data-view="grid">
+                        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 w-9" data-view="grid">
                             <i class="fas fa-th"></i>
                         </button>
                     </div>
@@ -108,86 +115,95 @@
             </section>
 
             <!-- 할일 목록 -->
-            <section class="todo-list-section">
-                <div class="todo-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">0</span>
-                        <span class="stat-label">전체</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">0</span>
-                        <span class="stat-label">완료</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">0</span>
-                        <span class="stat-label">남은 일</span>
+            <section class="mt-6 rounded-lg border bg-card shadow-sm">
+                <!-- 통계 -->
+                <div class="border-b bg-muted/50 p-4">
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div>
+                            <div class="text-2xl font-bold text-primary">0</div>
+                            <div class="text-sm text-muted-foreground">전체</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-green-600">0</div>
+                            <div class="text-sm text-muted-foreground">완료</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-orange-600">0</div>
+                            <div class="text-sm text-muted-foreground">남은 일</div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 샘플 할일 카드들 (디자인용) -->
-                <div class="todo-list">
+                <!-- 할일 목록 -->
+                <div class="p-4 space-y-3">
                     <!-- 샘플 할일 카드 1 -->
-                    <div class="todo-card high-priority" data-priority="high" data-category="work">
-                        <div class="todo-content">
-                            <input type="checkbox" class="todo-checkbox" id="todo-1">
-                            <label for="todo-1" class="todo-text">프로젝트 기획서 작성하기</label>
-                        </div>
-                        <div class="todo-meta">
-                            <span class="category-tag work">업무</span>
-                            <div class="todo-actions">
-                                <button class="edit-btn" title="수정">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="delete-btn" title="삭제">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                    <div class="flex items-center space-x-3 rounded-lg border p-4 hover:bg-muted/50 transition-colors" data-priority="high" data-category="work">
+                        <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" id="todo-1">
+                        <div class="flex-1 space-y-1">
+                            <label for="todo-1" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">프로젝트 기획서 작성하기</label>
+                            <div class="flex items-center space-x-2">
+                                <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-purple-100 text-purple-800">업무</span>
+                                <div class="h-1 w-1 rounded-full bg-red-500"></div>
+                                <span class="text-xs text-muted-foreground">높음</span>
                             </div>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8" title="수정">
+                                <i class="fas fa-edit text-sm"></i>
+                            </button>
+                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-destructive hover:text-destructive-foreground h-8 w-8" title="삭제">
+                                <i class="fas fa-trash text-sm"></i>
+                            </button>
                         </div>
                     </div>
 
                     <!-- 샘플 할일 카드 2 -->
-                    <div class="todo-card medium-priority completed" data-priority="medium" data-category="personal">
-                        <div class="todo-content">
-                            <input type="checkbox" class="todo-checkbox" id="todo-2" checked>
-                            <label for="todo-2" class="todo-text">마트에서 장보기</label>
-                        </div>
-                        <div class="todo-meta">
-                            <span class="category-tag personal">개인</span>
-                            <div class="todo-actions">
-                                <button class="edit-btn" title="수정">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="delete-btn" title="삭제">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                    <div class="flex items-center space-x-3 rounded-lg border p-4 hover:bg-muted/50 transition-colors opacity-60" data-priority="medium" data-category="personal">
+                        <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" id="todo-2" checked>
+                        <div class="flex-1 space-y-1">
+                            <label for="todo-2" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer line-through text-muted-foreground">마트에서 장보기</label>
+                            <div class="flex items-center space-x-2">
+                                <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-cyan-100 text-cyan-800">개인</span>
+                                <div class="h-1 w-1 rounded-full bg-yellow-500"></div>
+                                <span class="text-xs text-muted-foreground">보통</span>
                             </div>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8" title="수정">
+                                <i class="fas fa-edit text-sm"></i>
+                            </button>
+                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-destructive hover:text-destructive-foreground h-8 w-8" title="삭제">
+                                <i class="fas fa-trash text-sm"></i>
+                            </button>
                         </div>
                     </div>
 
                     <!-- 샘플 할일 카드 3 -->
-                    <div class="todo-card low-priority" data-priority="low" data-category="health">
-                        <div class="todo-content">
-                            <input type="checkbox" class="todo-checkbox" id="todo-3">
-                            <label for="todo-3" class="todo-text">30분 운동하기</label>
-                        </div>
-                        <div class="todo-meta">
-                            <span class="category-tag health">건강</span>
-                            <div class="todo-actions">
-                                <button class="edit-btn" title="수정">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="delete-btn" title="삭제">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                    <div class="flex items-center space-x-3 rounded-lg border p-4 hover:bg-muted/50 transition-colors" data-priority="low" data-category="health">
+                        <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" id="todo-3">
+                        <div class="flex-1 space-y-1">
+                            <label for="todo-3" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">30분 운동하기</label>
+                            <div class="flex items-center space-x-2">
+                                <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-green-100 text-green-800">건강</span>
+                                <div class="h-1 w-1 rounded-full bg-green-500"></div>
+                                <span class="text-xs text-muted-foreground">낮음</span>
                             </div>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8" title="수정">
+                                <i class="fas fa-edit text-sm"></i>
+                            </button>
+                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-destructive hover:text-destructive-foreground h-8 w-8" title="삭제">
+                                <i class="fas fa-trash text-sm"></i>
+                            </button>
                         </div>
                     </div>
 
                     <!-- 빈 상태 메시지 (할일이 없을 때) -->
-                    <div class="empty-state" style="display: none;">
-                        <i class="fas fa-clipboard-list"></i>
-                        <h3>할일이 없습니다</h3>
-                        <p>새로운 할일을 추가해보세요!</p>
+                    <div class="flex flex-col items-center justify-center py-12 text-center" style="display: none;">
+                        <i class="fas fa-clipboard-list text-4xl text-muted-foreground mb-4"></i>
+                        <h3 class="text-lg font-semibold">할일이 없습니다</h3>
+                        <p class="text-sm text-muted-foreground">새로운 할일을 추가해보세요!</p>
                     </div>
                 </div>
             </section>
@@ -195,9 +211,9 @@
     </main>
 
     <!-- 푸터 -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 오늘 할일. 모든 권리 보유.</p>
+    <footer class="border-t bg-background">
+        <div class="container mx-auto px-4 py-6">
+            <p class="text-center text-sm text-muted-foreground">&copy; 2024 오늘 할일. 모든 권리 보유.</p>
         </div>
     </footer>
 
