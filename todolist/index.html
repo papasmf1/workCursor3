@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘 할일 - Today's Todo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 헤더 영역 -->
+    <header class="header">
+        <div class="container">
+            <h1 class="app-title">
+                <i class="fas fa-tasks"></i>
+                오늘 할일
+            </h1>
+            <div class="progress-section">
+                <div class="progress-info">
+                    <span class="progress-text">진행률</span>
+                    <span class="progress-percentage">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="main">
+        <div class="container">
+            <!-- 할일 입력 영역 -->
+            <section class="todo-input-section">
+                <div class="input-container">
+                    <input type="text" class="todo-input" placeholder="새로운 할일을 입력하세요..." maxlength="100">
+                    <button class="add-btn" type="button">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                
+                <!-- 우선순위 선택 -->
+                <div class="priority-selector">
+                    <label class="priority-label">우선순위:</label>
+                    <div class="priority-options">
+                        <button class="priority-btn high active" data-priority="high">
+                            <i class="fas fa-exclamation-circle"></i>
+                            높음
+                        </button>
+                        <button class="priority-btn medium" data-priority="medium">
+                            <i class="fas fa-minus-circle"></i>
+                            보통
+                        </button>
+                        <button class="priority-btn low" data-priority="low">
+                            <i class="fas fa-arrow-down"></i>
+                            낮음
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 카테고리 선택 -->
+                <div class="category-selector">
+                    <label class="category-label">카테고리:</label>
+                    <select class="category-select">
+                        <option value="work">업무</option>
+                        <option value="personal">개인</option>
+                        <option value="shopping">쇼핑</option>
+                        <option value="health">건강</option>
+                        <option value="study">학습</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- 필터 및 정렬 옵션 -->
+            <section class="filter-section">
+                <div class="filter-container">
+                    <div class="filter-group">
+                        <label class="filter-label">카테고리 필터:</label>
+                        <select class="filter-select">
+                            <option value="all">전체</option>
+                            <option value="work">업무</option>
+                            <option value="personal">개인</option>
+                            <option value="shopping">쇼핑</option>
+                            <option value="health">건강</option>
+                            <option value="study">학습</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">정렬:</label>
+                        <select class="sort-select">
+                            <option value="priority">우선순위순</option>
+                            <option value="created">생성순</option>
+                            <option value="alphabetical">가나다순</option>
+                        </select>
+                    </div>
+
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                        <button class="view-btn" data-view="grid">
+                            <i class="fas fa-th"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 할일 목록 -->
+            <section class="todo-list-section">
+                <div class="todo-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">0</span>
+                        <span class="stat-label">전체</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">0</span>
+                        <span class="stat-label">완료</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">0</span>
+                        <span class="stat-label">남은 일</span>
+                    </div>
+                </div>
+
+                <!-- 샘플 할일 카드들 (디자인용) -->
+                <div class="todo-list">
+                    <!-- 샘플 할일 카드 1 -->
+                    <div class="todo-card high-priority" data-priority="high" data-category="work">
+                        <div class="todo-content">
+                            <input type="checkbox" class="todo-checkbox" id="todo-1">
+                            <label for="todo-1" class="todo-text">프로젝트 기획서 작성하기</label>
+                        </div>
+                        <div class="todo-meta">
+                            <span class="category-tag work">업무</span>
+                            <div class="todo-actions">
+                                <button class="edit-btn" title="수정">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="delete-btn" title="삭제">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 샘플 할일 카드 2 -->
+                    <div class="todo-card medium-priority completed" data-priority="medium" data-category="personal">
+                        <div class="todo-content">
+                            <input type="checkbox" class="todo-checkbox" id="todo-2" checked>
+                            <label for="todo-2" class="todo-text">마트에서 장보기</label>
+                        </div>
+                        <div class="todo-meta">
+                            <span class="category-tag personal">개인</span>
+                            <div class="todo-actions">
+                                <button class="edit-btn" title="수정">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="delete-btn" title="삭제">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 샘플 할일 카드 3 -->
+                    <div class="todo-card low-priority" data-priority="low" data-category="health">
+                        <div class="todo-content">
+                            <input type="checkbox" class="todo-checkbox" id="todo-3">
+                            <label for="todo-3" class="todo-text">30분 운동하기</label>
+                        </div>
+                        <div class="todo-meta">
+                            <span class="category-tag health">건강</span>
+                            <div class="todo-actions">
+                                <button class="edit-btn" title="수정">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="delete-btn" title="삭제">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 빈 상태 메시지 (할일이 없을 때) -->
+                    <div class="empty-state" style="display: none;">
+                        <i class="fas fa-clipboard-list"></i>
+                        <h3>할일이 없습니다</h3>
+                        <p>새로운 할일을 추가해보세요!</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 오늘 할일. 모든 권리 보유.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript (기능은 나중에 추가) -->
+    <script src="script.js"></script>
+</body>
+</html>
