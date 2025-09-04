@@ -99,6 +99,63 @@
             --input: 217.2 32.6% 17.5%;
             --ring: 224.3 76.3% 94.1%;
         }
+        
+        /* 그리드 뷰 스타일 */
+        .grid-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .grid-view .todo-item {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.5rem;
+        }
+        
+        .grid-view .todo-content {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .grid-view .todo-meta {
+            width: 100%;
+            justify-content: space-between;
+        }
+        
+        .grid-view .todo-actions {
+            margin-top: 0.5rem;
+        }
+        
+        /* 애니메이션 */
+        .todo-item {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 완료된 할일 애니메이션 */
+        .todo-item.completed {
+            animation: fadeOut 0.3s ease-out;
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0.6;
+            }
+        }
     </style>
 </head>
 <body>
@@ -197,12 +254,21 @@
                     </div>
 
                     <div class="flex items-center space-x-1 ml-auto">
-                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-gray-300 bg-blue-600 text-white hover:bg-blue-700 h-9 w-9 transition-colors" data-view="list">
+                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-gray-300 bg-blue-600 text-white hover:bg-blue-700 h-9 w-9 transition-colors" data-view="list" title="리스트 뷰">
                             <i class="fas fa-list"></i>
                         </button>
-                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 h-9 w-9 transition-colors" data-view="grid">
+                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 h-9 w-9 transition-colors" data-view="grid" title="그리드 뷰">
                             <i class="fas fa-th"></i>
                         </button>
+                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 h-9 px-3 transition-colors" onclick="exportTodos()" title="데이터 내보내기">
+                            <i class="fas fa-download mr-1"></i>
+                            내보내기
+                        </button>
+                        <label class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 h-9 px-3 transition-colors cursor-pointer" title="데이터 가져오기">
+                            <i class="fas fa-upload mr-1"></i>
+                            가져오기
+                            <input type="file" accept=".json" onchange="importTodos(event)" class="hidden">
+                        </label>
                     </div>
                 </div>
             </section>
@@ -306,7 +372,12 @@
     <!-- 푸터 -->
     <footer class="border-t bg-white">
         <div class="max-w-7xl mx-auto px-4 py-6">
-            <p class="text-center text-sm text-gray-500">&copy; 2024 오늘 할일. 모든 권리 보유.</p>
+            <div class="text-center">
+                <p class="text-sm text-gray-500 mb-2">&copy; 2024 오늘 할일. 모든 권리 보유.</p>
+                <div class="text-xs text-gray-400 space-x-4">
+                    <span>💡 <strong>단축키:</strong> Enter(추가), Ctrl+Enter(빠른 추가), Esc(취소)</span>
+                </div>
+            </div>
         </div>
     </footer>
 
