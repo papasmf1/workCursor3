@@ -1,5 +1,23 @@
-// 오늘 할일 웹앱 - 완전한 기능 구현
-console.log('오늘 할일 웹앱이 로드되었습니다. (완전한 기능 구현)');
+// 오늘 할일 웹앱 - Supabase 연동 버전
+console.log('오늘 할일 웹앱이 로드되었습니다. (Supabase 연동)');
+
+// Supabase 설정
+const SUPABASE_URL = window.SUPABASE_CONFIG?.url || 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = window.SUPABASE_CONFIG?.anonKey || 'YOUR_SUPABASE_ANON_KEY';
+
+// Supabase 클라이언트 초기화
+let supabase;
+try {
+    if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('Supabase 클라이언트가 초기화되었습니다.');
+    } else {
+        console.log('Supabase 설정이 필요합니다. config.js 파일을 확인하세요.');
+    }
+} catch (error) {
+    console.error('Supabase 초기화 실패:', error);
+    console.log('로컬 스토리지 모드로 전환합니다.');
+}
 
 // 전역 변수
 let todos = [];
@@ -8,6 +26,7 @@ let currentSort = 'priority';
 let currentView = 'list';
 let currentPriority = 'high';
 let currentCategory = 'work';
+let isSupabaseConnected = false;
 
 // DOM 요소들
 const todoInput = document.querySelector('input[type="text"]');
@@ -19,12 +38,153 @@ const filterSelect = document.querySelectorAll('select')[1];
 const sortSelect = document.querySelectorAll('select')[2];
 const todoList = document.querySelector('.p-4.space-y-3');
 
+// Supabase 연결 테스트
+async function testSupabaseConnection() {
+    if (!supabase) return false;
+    
+    try {
+        const { data, error } = await supabase
+            .from('todos')
+            .select('count')
+            .limit(1);
+        
+        if (error) {
+            console.error('Supabase 연결 테스트 실패:', error);
+            return false;
+        }
+        
+        console.log('Supabase 연결 성공!');
+        return true;
+    } catch (error) {
+        console.error('Supabase 연결 테스트 중 오류:', error);
+        return false;
+    }
+}
+
+// Supabase에서 todos 로드
+async function loadTodosFromSupabase() {
+    if (!supabase) return [];
+    
+    try {
+        const { data, error } = await supabase
+            .from('todos')
+            .select('*')
+            .order('created_at', { ascending: false });
+        
+        if (error) {
+            console.error('Supabase에서 데이터 로드 실패:', error);
+            return [];
+        }
+        
+        // Supabase 데이터를 앱 형식으로 변환
+        return data.map(todo => ({
+            id: todo.id,
+            text: todo.text,
+            completed: todo.completed,
+            priority: todo.priority,
+            category: todo.category,
+            createdAt: new Date(todo.created_at),
+            updatedAt: new Date(todo.updated_at)
+        }));
+    } catch (error) {
+        console.error('Supabase 데이터 로드 중 오류:', error);
+        return [];
+    }
+}
+
+// Supabase에 todo 저장
+async function saveTodoToSupabase(todo) {
+    if (!supabase) return null;
+    
+    try {
+        const { data, error } = await supabase
+            .from('todos')
+            .insert([{
+                text: todo.text,
+                completed: todo.completed,
+                priority: todo.priority,
+                category: todo.category
+            }])
+            .select()
+            .single();
+        
+        if (error) {
+            console.error('Supabase에 데이터 저장 실패:', error);
+            return null;
+        }
+        
+        return data;
+    } catch (error) {
+        console.error('Supabase 데이터 저장 중 오류:', error);
+        return null;
+    }
+}
+
+// Supabase에서 todo 업데이트
+async function updateTodoInSupabase(todo) {
+    if (!supabase) return false;
+    
+    try {
+        const { error } = await supabase
+            .from('todos')
+            .update({
+                text: todo.text,
+                completed: todo.completed,
+                priority: todo.priority,
+                category: todo.category
+            })
+            .eq('id', todo.id);
+        
+        if (error) {
+            console.error('Supabase에서 데이터 업데이트 실패:', error);
+            return false;
+        }
+        
+        return true;
+    } catch (error) {
+        console.error('Supabase 데이터 업데이트 중 오류:', error);
+        return false;
+    }
+}
+
+// Supabase에서 todo 삭제
+async function deleteTodoFromSupabase(id) {
+    if (!supabase) return false;
+    
+    try {
+        const { error } = await supabase
+            .from('todos')
+            .delete()
+            .eq('id', id);
+        
+        if (error) {
+            console.error('Supabase에서 데이터 삭제 실패:', error);
+            return false;
+        }
+        
+        return true;
+    } catch (error) {
+        console.error('Supabase 데이터 삭제 중 오류:', error);
+        return false;
+    }
+}
+
 // 초기화
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     console.log('DOM이 로드되었습니다. 모든 기능을 초기화합니다.');
     
-    // 로컬 스토리지에서 데이터 로드
-    loadTodos();
+    // Supabase 연결 테스트
+    isSupabaseConnected = await testSupabaseConnection();
+    
+    if (isSupabaseConnected) {
+        console.log('Supabase 모드로 실행합니다.');
+        // Supabase에서 데이터 로드
+        todos = await loadTodosFromSupabase();
+    } else {
+        console.log('로컬 스토리지 모드로 실행합니다.');
+        // 로컬 스토리지에서 데이터 로드
+        loadTodos();
+    }
     
     // 이벤트 리스너 등록
     setupEventListeners();
@@ -78,7 +238,7 @@ function setupEventListeners() {
 }
 
 // 할일 추가
-function addTodo() {
+async function addTodo() {
     const text = todoInput.value.trim();
     if (!text) return;
     
@@ -92,26 +252,53 @@ function addTodo() {
         updatedAt: new Date()
     };
     
-    todos.push(todo);
-    todoInput.value = '';
+    if (isSupabaseConnected) {
+        // Supabase에 저장
+        const savedTodo = await saveTodoToSupabase(todo);
+        if (savedTodo) {
+            // Supabase에서 반환된 ID로 업데이트
+            todo.id = savedTodo.id;
+            todos.push(todo);
+        } else {
+            console.error('Supabase에 저장 실패, 로컬 스토리지에 저장합니다.');
+            todos.push(todo);
+            saveTodos();
+        }
+    } else {
+        // 로컬 스토리지에 저장
+        todos.push(todo);
+        saveTodos();
+    }
     
-    saveTodos();
+    todoInput.value = '';
     renderTodos();
     updateProgress();
     updateStats();
 }
 
 // 할일 삭제
-function deleteTodo(id) {
+async function deleteTodo(id) {
+    if (isSupabaseConnected) {
+        // Supabase에서 삭제
+        const success = await deleteTodoFromSupabase(id);
+        if (!success) {
+            console.error('Supabase에서 삭제 실패, 로컬에서만 삭제합니다.');
+        }
+    }
+    
     todos = todos.filter(todo => todo.id !== id);
-    saveTodos();
+    
+    if (!isSupabaseConnected) {
+        saveTodos();
+    }
+    
     renderTodos();
     updateProgress();
     updateStats();
 }
 
 // 할일 수정
-function editTodo(id) {
+async function editTodo(id) {
     const todo = todos.find(t => t.id === id);
     if (!todo) return;
     
@@ -119,18 +306,38 @@ function editTodo(id) {
     if (newText && newText.trim() !== '') {
         todo.text = newText.trim();
         todo.updatedAt = new Date();
-        saveTodos();
+        
+        if (isSupabaseConnected) {
+            // Supabase에서 업데이트
+            const success = await updateTodoInSupabase(todo);
+            if (!success) {
+                console.error('Supabase에서 업데이트 실패, 로컬에서만 업데이트합니다.');
+            }
+        } else {
+            saveTodos();
+        }
+        
         renderTodos();
     }
 }
 
 // 할일 완료 토글
-function toggleComplete(id) {
+async function toggleComplete(id) {
     const todo = todos.find(t => t.id === id);
     if (todo) {
         todo.completed = !todo.completed;
         todo.updatedAt = new Date();
-        saveTodos();
+        
+        if (isSupabaseConnected) {
+            // Supabase에서 업데이트
+            const success = await updateTodoInSupabase(todo);
+            if (!success) {
+                console.error('Supabase에서 업데이트 실패, 로컬에서만 업데이트합니다.');
+            }
+        } else {
+            saveTodos();
+        }
+        
         renderTodos();
         updateProgress();
         updateStats();
