@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // 오늘 할일 웹앱 - Supabase 연동 버전
 console.log('오늘 할일 웹앱이 로드되었습니다. (Supabase 연동)');
 
@@ -27,17 +28,26 @@ let currentView = 'list';
 let currentPriority = 'high';
 let currentCategory = 'work';
 let isSupabaseConnected = false;
+=======
+// 오늘 할일 웹앱 - JavaScript (shadcn/ui New York 스타일)
+// 현재는 디자인만 구현된 상태
 
-// DOM 요소들
-const todoInput = document.querySelector('input[type="text"]');
-const addBtn = document.querySelector('button[type="button"]');
-const priorityBtns = document.querySelectorAll('[data-priority]');
-const viewBtns = document.querySelectorAll('[data-view]');
-const categorySelect = document.querySelector('select');
-const filterSelect = document.querySelectorAll('select')[1];
-const sortSelect = document.querySelectorAll('select')[2];
-const todoList = document.querySelector('.p-4.space-y-3');
+console.log('오늘 할일 웹앱이 로드되었습니다. (shadcn/ui New York 스타일)');
+>>>>>>> parent of aacc3bd (기능구현까지 추가)
 
+// TODO: 나중에 구현할 기능들
+// 1. 할일 추가 기능
+// 2. 할일 삭제 기능
+// 3. 할일 완료 토글 기능
+// 4. 할일 수정 기능
+// 5. 우선순위 변경 기능
+// 6. 카테고리 필터링 기능
+// 7. 정렬 기능
+// 8. 로컬 스토리지 연동
+// 9. 진행률 계산 기능
+// 10. 반응형 뷰 전환 기능
+
+<<<<<<< HEAD
 // Supabase 연결 테스트
 async function testSupabaseConnection() {
     if (!supabase) return false;
@@ -185,40 +195,49 @@ document.addEventListener('DOMContentLoaded', async function() {
         // 로컬 스토리지에서 데이터 로드
         loadTodos();
     }
+=======
+// 현재는 샘플 데이터로 디자인만 표시
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM이 로드되었습니다. shadcn/ui New York 스타일 적용 완료');
     
-    // 이벤트 리스너 등록
-    setupEventListeners();
+    // 기본 이벤트 리스너들 (기능 구현 시 활성화)
+    const addBtn = document.querySelector('button[type="button"]');
+    const todoInput = document.querySelector('input[type="text"]');
+    const priorityBtns = document.querySelectorAll('[data-priority]');
+    const viewBtns = document.querySelectorAll('[data-view]');
+>>>>>>> parent of aacc3bd (기능구현까지 추가)
     
-    // 초기 렌더링
-    renderTodos();
-    updateProgress();
-    updateStats();
-});
-
-// 이벤트 리스너 설정
-function setupEventListeners() {
-    // 할일 추가
-    addBtn.addEventListener('click', addTodo);
-    todoInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            addTodo();
-        }
-    });
-    
-    // 우선순위 버튼
+    // 우선순위 버튼 클릭 이벤트 (Tailwind CSS 스타일)
     priorityBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-            setPriority(this.dataset.priority);
+            // 모든 우선순위 버튼에서 active 클래스 제거
+            priorityBtns.forEach(b => {
+                b.classList.remove('bg-blue-600', 'text-white', 'hover:bg-blue-700');
+                b.classList.add('border-gray-300', 'bg-white', 'text-gray-700', 'hover:bg-gray-50');
+            });
+            
+            // 클릭된 버튼에 active 스타일 적용
+            this.classList.remove('border-gray-300', 'bg-white', 'text-gray-700', 'hover:bg-gray-50');
+            this.classList.add('bg-blue-600', 'text-white', 'hover:bg-blue-700');
         });
     });
     
-    // 뷰 전환 버튼
+    // 뷰 전환 버튼 클릭 이벤트 (Tailwind CSS 스타일)
     viewBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-            setView(this.dataset.view);
+            // 모든 뷰 버튼에서 active 클래스 제거
+            viewBtns.forEach(b => {
+                b.classList.remove('bg-blue-600', 'text-white', 'hover:bg-blue-700');
+                b.classList.add('border-gray-300', 'bg-white', 'text-gray-700', 'hover:bg-gray-50');
+            });
+            
+            // 클릭된 버튼에 active 스타일 적용
+            this.classList.remove('border-gray-300', 'bg-white', 'text-gray-700', 'hover:bg-gray-50');
+            this.classList.add('bg-blue-600', 'text-white', 'hover:bg-blue-700');
         });
     });
     
+<<<<<<< HEAD
     // 카테고리 선택
     categorySelect.addEventListener('change', function() {
         currentCategory = this.value;
@@ -477,155 +496,62 @@ function createTodoHTML(todo) {
 // 할일 이벤트 리스너 설정
 function setupTodoEventListeners() {
     // 체크박스 이벤트
+=======
+    // 할일 체크박스 클릭 이벤트 (Tailwind CSS 스타일)
+>>>>>>> parent of aacc3bd (기능구현까지 추가)
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
-            const id = this.id.replace('todo-', '');
-            toggleComplete(id);
-        });
-    });
-    
-    // 수정 버튼 이벤트
-    const editBtns = document.querySelectorAll('.edit-btn');
-    editBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const id = this.dataset.id;
-            editTodo(id);
-        });
-    });
-    
-    // 삭제 버튼 이벤트
-    const deleteBtns = document.querySelectorAll('.delete-btn');
-    deleteBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const id = this.dataset.id;
-            if (confirm('정말로 이 할일을 삭제하시겠습니까?')) {
-                deleteTodo(id);
+            const todoItem = this.closest('[data-priority]');
+            const label = todoItem.querySelector('label');
+            
+            if (this.checked) {
+                todoItem.classList.add('opacity-60');
+                label.classList.add('line-through', 'text-gray-500');
+            } else {
+                todoItem.classList.remove('opacity-60');
+                label.classList.remove('line-through', 'text-gray-500');
             }
+            updateProgress();
         });
     });
-}
-
-// 진행률 업데이트
-function updateProgress() {
-    const totalTodos = todos.length;
-    const completedTodos = todos.filter(todo => todo.completed).length;
-    const progressPercentage = totalTodos > 0 ? Math.round((completedTodos / totalTodos) * 100) : 0;
     
-    const progressFill = document.querySelector('.bg-blue-600.rounded-full');
-    const progressText = document.querySelector('.text-lg.font-semibold');
+    // 진행률 업데이트 함수 (Tailwind CSS 스타일)
+    function updateProgress() {
+        const totalTodos = document.querySelectorAll('[data-priority]').length;
+        const completedTodos = document.querySelectorAll('input[type="checkbox"]:checked').length;
+        const progressPercentage = totalTodos > 0 ? Math.round((completedTodos / totalTodos) * 100) : 0;
+        
+        const progressFill = document.querySelector('.bg-blue-600.rounded-full');
+        const progressText = document.querySelector('.text-lg.font-semibold');
+        
+        if (progressFill) {
+            progressFill.style.width = progressPercentage + '%';
+        }
+        if (progressText) {
+            progressText.textContent = progressPercentage + '%';
+        }
+        
+        // 통계 업데이트 (Tailwind CSS 스타일)
+        const statNumbers = document.querySelectorAll('.text-2xl.font-bold');
+        if (statNumbers.length >= 3) {
+            statNumbers[0].textContent = totalTodos;
+            statNumbers[1].textContent = completedTodos;
+            statNumbers[2].textContent = totalTodos - completedTodos;
+        }
+    }
     
-    if (progressFill) {
-        progressFill.style.width = progressPercentage + '%';
-    }
-    if (progressText) {
-        progressText.textContent = progressPercentage + '%';
-    }
-}
-
-// 통계 업데이트
-function updateStats() {
-    const totalTodos = todos.length;
-    const completedTodos = todos.filter(todo => todo.completed).length;
-    const remainingTodos = totalTodos - completedTodos;
+    // 초기 진행률 설정
+    updateProgress();
     
-    const statNumbers = document.querySelectorAll('.text-2xl.font-bold');
-    if (statNumbers.length >= 3) {
-        statNumbers[0].textContent = totalTodos;
-        statNumbers[1].textContent = completedTodos;
-        statNumbers[2].textContent = remainingTodos;
-    }
-}
-
-// 카테고리 이름 반환
-function getCategoryName(category) {
-    const names = {
-        work: '업무',
-        personal: '개인',
-        shopping: '쇼핑',
-        health: '건강',
-        study: '학습'
-    };
-    return names[category] || category;
-}
-
-// 우선순위 이름 반환
-function getPriorityName(priority) {
-    const names = {
-        high: '높음',
-        medium: '보통',
-        low: '낮음'
-    };
-    return names[priority] || priority;
-}
-
-// 로컬 스토리지 저장
-function saveTodos() {
-    localStorage.setItem('todos', JSON.stringify(todos));
-}
-
-// 로컬 스토리지 로드
-function loadTodos() {
-    const saved = localStorage.getItem('todos');
-    if (saved) {
-        todos = JSON.parse(saved);
-        // 날짜 객체 복원
-        todos.forEach(todo => {
-            todo.createdAt = new Date(todo.createdAt);
-            todo.updatedAt = new Date(todo.updatedAt);
+    // Tailwind CSS 스타일의 호버 효과 추가
+    const todoItems = document.querySelectorAll('[data-priority]');
+    todoItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.classList.add('hover:bg-gray-50');
         });
-    }
-}
-
-// 데이터 내보내기 (선택사항)
-function exportTodos() {
-    const dataStr = JSON.stringify(todos, null, 2);
-    const dataBlob = new Blob([dataStr], {type: 'application/json'});
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'todos.json';
-    link.click();
-    URL.revokeObjectURL(url);
-}
-
-// 데이터 가져오기 (선택사항)
-function importTodos(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                const importedTodos = JSON.parse(e.target.result);
-                todos = importedTodos;
-                saveTodos();
-                renderTodos();
-                updateProgress();
-                updateStats();
-                alert('할일이 성공적으로 가져와졌습니다.');
-            } catch (error) {
-                alert('파일을 읽는 중 오류가 발생했습니다.');
-            }
-        };
-        reader.readAsText(file);
-    }
-}
-
-// 키보드 단축키
-document.addEventListener('keydown', function(e) {
-    // Ctrl+Enter: 새 할일 추가
-    if (e.ctrlKey && e.key === 'Enter') {
-        addTodo();
-    }
-    
-    // Escape: 입력 필드 초기화
-    if (e.key === 'Escape') {
-        todoInput.value = '';
-        todoInput.blur();
-    }
+        item.addEventListener('mouseleave', function() {
+            this.classList.remove('hover:bg-gray-50');
+        });
+    });
 });
-
-// 초기 우선순위 설정
-setPriority('high');
-
-console.log('모든 기능이 성공적으로 로드되었습니다!');
